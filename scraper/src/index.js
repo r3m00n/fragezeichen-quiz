@@ -6,13 +6,11 @@ import chalkAnimation from "chalk-animation"
 // Data to be written to the JSON file
 const folgen = []
 
-const sleep = (ms = 2000) => new Promise(r => setTimeout(r, ms))
-
 async function main() {
-    const consoleTitle = chalkAnimation.rainbow("Drei Fragezeichen Scraper")
+    chalkAnimation.rainbow("Drei Fragezeichen Scraper")
 
     const browser = await playwright.chromium.launch({
-        headless: false // set this to true to hide ui
+        headless: true // set this to true to hide ui
     })
 
     // open browser
@@ -25,76 +23,72 @@ async function main() {
     await page.waitForSelector("#onetrust-reject-all-handler")
     await page.locator("#onetrust-reject-all-handler").click()
 
-    // // get number pages
-    // const pageLinks = await page.locator(".page-link").all()
-    // const lastPageNum = await pageLinks[pageLinks.length - 2].innerHTML()
-    const lastPageNum = 20
+    // get total number of pages
+    const lastPageNum = await page.evaluate(() => {
+        let pagingLinks = document.querySelectorAll(".page-link")
+        return document.querySelectorAll(".page-link")[pagingLinks.length - 2]
+            .innerHTML
+    })
 
     // viseting all the pages
-    // for (let currentPage = 1; currentPage <= lastPageNum; currentPage++) {
-    //     console.log(`Scraping Page ${currentPage}/${lastPageNum}`)
+    for (let currentPage = 1; currentPage <= lastPageNum; currentPage++) {
+        chalkAnimation.karaoke(`Scraping Page ${currentPage}/${lastPageNum}`)
 
-    // go to page
-    await page.goto(
-        // `https://www.dreifragezeichen.de/produktwelt/hoerspiele?page=${currentPage}`
-        `https://www.dreifragezeichen.de/produktwelt/hoerspiele?page=${22}`
-    )
+        // go to page
+        await page.goto(
+            `https://www.dreifragezeichen.de/produktwelt/hoerspiele?page=${currentPage}`
+        )
 
-    const allCardExpanders = await page.locator(".card-expander").all()
-    const allCardExpandables = await page.locator(".card-expandable").all()
-    // console.log(allCards)
+        const cardLinks = await page.evaluate(() => {
+            let links = []
+            let buttons = document.querySelectorAll(".btn-primary")
+            buttons.forEach(button => {
+                links.push(button.href)
+            })
+            return links
+        })
 
-    for (let i = 0; i < allCardExpandables.length; i++) {
-        // expand
-        await page
-            .locator(".card-expandable")
-            .nth(i)
-            .locator(".btn-icon-more")
-            .click()
+        for (let i = 0; i < cardLinks.length; i++) {
+            await page.goto(cardLinks[i])
 
-        // click on "Mehr Infos"
-        await page.locator(".card-expander").nth(0).locator("a").first().click()
+            let folge = {}
 
-        let folge = {}
+            folge.nummer = (await page.locator("h1").innerHTML()).slice(20)
 
-        folge.folge = (await page.locator("h1").innerHTML()).slice(20)
+            folge.titel = await page.locator("h2").innerHTML()
 
-        folge.titel = await page.locator("h2").innerHTML()
+            folge.veroeffentlichung = (
+                await page.getByText("Veröffentlichungsdatum").innerHTML()
+            ).slice(24)
 
-        folge.veroeffentlichung = (
-            await page.getByText("Veröffentlichungsdatum").innerHTML()
-        ).slice(24)
+            folge.inhalt = await page.locator("p").nth(0).innerHTML()
 
-        folge.inhalt = await page.locator("p").nth(0).innerHTML()
+            folge.sprecher = (await page.locator("p").nth(1).innerHTML())
+                .split("<br>\n")
+                .join(";")
 
-        folge.sprecher = (await page.locator("p").nth(1).innerHTML())
-            .split("<br>\n")
-            .join(";")
+            folge.detailinformationen = (
+                await page.locator("p").nth(2).innerHTML()
+            )
+                .split("<br>\n")
+                .join(";")
 
-        folge.detailinformationen = (await page.locator("p").nth(2).innerHTML())
-            .split("<br>\n")
-            .join(";")
-
-        folgen.push(folge)
-        console.log(folgen)
-
-        await page.goBack()
+            folgen.push(folge)
+        }
     }
-    // scape
-    await page.waitForTimeout(1000) // wait
     await browser.close()
+
+    // Convert the data object to a JSON string
+    const jsonData = JSON.stringify(folgen)
+
+    // Write the JSON string to a file
+    fs.writeFile("folgen.json", jsonData, err => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        console.log("Data written to file successfully!")
+    })
 }
 
 main()
-
-// // Convert the data object to a JSON string
-// const jsonData = JSON.stringify(data)
-
-// // Write the JSON string to a file
-// fs.writeFile("data.json", jsonData, err => {
-//     if (err) {
-//         console.error(err)
-//         return
-//     }
-//     console.log("Data written to file successfully!")
-// })
