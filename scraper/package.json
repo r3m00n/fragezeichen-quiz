@@ -5,13 +5,16 @@
     "main": "src/index.js",
     "type": "module",
     "scripts": {
-        "start": "node src/index.js"
+        "scrape": "node src/index.js",
+        "upload": "node --no-warnings src/upload.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@supabase/supabase-js": "^2.12.1",
         "chalk-animation": "^2.0.3",
+        "dotenv": "^16.0.3",
         "playwright": "^1.32.0"
     }
 }
