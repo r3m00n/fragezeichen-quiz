@@ -3,10 +3,10 @@ import * as fs from "fs"
 import chalkAnimation from "chalk-animation"
 
 // Data to be written to the JSON file
-const folgen = []
+const data = {episodes: []}
 
 async function main() {
-    chalkAnimation.rainbow("Drei Fragezeichen Scraper")
+    chalkAnimation.rainbow("??? Scraperino 420")
 
     const browser = await playwright.chromium.launch({
         headless: true // set this to true to hide ui
@@ -30,7 +30,7 @@ async function main() {
 
     // viseting all the pages
     for (let currentPage = 1; currentPage <= lastPageNum; currentPage++) {
-        chalkAnimation.karaoke(`Scraping Page ${currentPage}/${lastPageNum}`)
+        let progressLog = chalkAnimation.karaoke(`Scraping Page ${currentPage}/${lastPageNum}`)
 
         // go to page
         await page.goto(`https://www.dreifragezeichen.de/produktwelt/hoerspiele?page=${currentPage}`)
@@ -49,43 +49,40 @@ async function main() {
         for (let i = 0; i < cardLinks.length; i++) {
             await page.goto(cardLinks[i])
 
-            let folge = {}
+            let episode = {}
 
-            folge.nummer = (await page.locator("h1").innerHTML()).slice(20)
+            episode.number = (await page.locator("h1").innerHTML()).slice(20)
 
-            folge.titel = await page.locator("h2").innerHTML()
+            episode.title = await page.locator("h2").innerHTML()
 
-            folge.bild_url = await page.evaluate(
-                () => document.getElementsByClassName("product-cover")[0].src
-            )
+            episode.cover_url = await page.evaluate(() => document.getElementsByClassName("product-cover")[0].src)
 
-            folge.veroeffentlichung = (await page.getByText("Veröffentlichungsdatum").innerHTML()).slice(24)
+            episode.release = (await page.getByText("Veröffentlichungsdatum").innerHTML()).slice(24)
 
-            folge.inhalt = await page.locator("p").nth(0).innerHTML()
+            episode.summary = await page.locator("p").nth(0).innerHTML()
 
-            folge.sprecher = (await page.locator("p").nth(1).innerHTML()).split("<br>\n").join(";")
+            episode.speaker = (await page.locator("p").nth(1).innerHTML()).split("<br>\n").join(";")
 
-            folge.detailinformationen = (await page.locator("p").nth(2).innerHTML()).split("<br>\n").join(";")
+            episode.details = (await page.locator("p").nth(2).innerHTML()).split("<br>\n").join(";")
 
-            folge.mp3_urls = await page.evaluate(() => {
-                let previews = []
+            episode.mp3_urls = await page.evaluate(() => {
+                let audioPreviews = []
                 let previewButtons = document.getElementsByClassName("btn-icon-audio")
                 for (let i = 0; i < previewButtons.length; i++) {
-                    previews.push(previewButtons[i].href)
+                    audioPreviews.push(previewButtons[i].href)
                 }
-                return previews.join(";")
+                return audioPreviews.join(";")
             })
-
-            folgen.push(folge)
+            data.episodes.push(episode)
         }
     }
     await browser.close()
 
     // Convert the data object to a JSON string
-    const jsonData = JSON.stringify(folgen)
+    const jsonData = JSON.stringify(data)
 
     // Write the JSON string to a file
-    fs.writeFile("folgen.json", jsonData, err => {
+    fs.writeFile("./out/episodes.json", jsonData, err => {
         if (err) {
             console.error(err)
             return

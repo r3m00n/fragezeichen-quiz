@@ -5,7 +5,7 @@
     "main": "src/index.js",
     "type": "module",
     "scripts": {
-        "scrape": "node src/index.js",
+        "scrape": "node src/scrape.js",
         "upload": "node --no-warnings src/upload.js"
     },
     "keywords": [],
