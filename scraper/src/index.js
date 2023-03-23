@@ -1,6 +1,5 @@
 import * as playwright from "playwright"
 import * as fs from "fs"
-import chalk from "chalk"
 import chalkAnimation from "chalk-animation"
 
 // Data to be written to the JSON file
@@ -26,8 +25,7 @@ async function main() {
     // get total number of pages
     const lastPageNum = await page.evaluate(() => {
         let pagingLinks = document.querySelectorAll(".page-link")
-        return document.querySelectorAll(".page-link")[pagingLinks.length - 2]
-            .innerHTML
+        return document.querySelectorAll(".page-link")[pagingLinks.length - 2].innerHTML
     })
 
     // viseting all the pages
@@ -35,10 +33,9 @@ async function main() {
         chalkAnimation.karaoke(`Scraping Page ${currentPage}/${lastPageNum}`)
 
         // go to page
-        await page.goto(
-            `https://www.dreifragezeichen.de/produktwelt/hoerspiele?page=${currentPage}`
-        )
+        await page.goto(`https://www.dreifragezeichen.de/produktwelt/hoerspiele?page=${currentPage}`)
 
+        // getting links for detail pages
         const cardLinks = await page.evaluate(() => {
             let links = []
             let buttons = document.querySelectorAll(".btn-primary")
@@ -48,6 +45,7 @@ async function main() {
             return links
         })
 
+        // visiting detail pages
         for (let i = 0; i < cardLinks.length; i++) {
             await page.goto(cardLinks[i])
 
@@ -57,21 +55,26 @@ async function main() {
 
             folge.titel = await page.locator("h2").innerHTML()
 
-            folge.veroeffentlichung = (
-                await page.getByText("Veröffentlichungsdatum").innerHTML()
-            ).slice(24)
+            folge.bild_url = await page.evaluate(
+                () => document.getElementsByClassName("product-cover")[0].src
+            )
+
+            folge.veroeffentlichung = (await page.getByText("Veröffentlichungsdatum").innerHTML()).slice(24)
 
             folge.inhalt = await page.locator("p").nth(0).innerHTML()
 
-            folge.sprecher = (await page.locator("p").nth(1).innerHTML())
-                .split("<br>\n")
-                .join(";")
+            folge.sprecher = (await page.locator("p").nth(1).innerHTML()).split("<br>\n").join(";")
 
-            folge.detailinformationen = (
-                await page.locator("p").nth(2).innerHTML()
-            )
-                .split("<br>\n")
-                .join(";")
+            folge.detailinformationen = (await page.locator("p").nth(2).innerHTML()).split("<br>\n").join(";")
+
+            folge.mp3_urls = await page.evaluate(() => {
+                let previews = []
+                let previewButtons = document.getElementsByClassName("btn-icon-audio")
+                for (let i = 0; i < previewButtons.length; i++) {
+                    previews.push(previewButtons[i].href)
+                }
+                return previews.join(";")
+            })
 
             folgen.push(folge)
         }
