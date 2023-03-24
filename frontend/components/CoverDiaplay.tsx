@@ -2,7 +2,7 @@ import {StyleSheet, View, Text, Image} from "react-native"
 import {ReactNativeZoomableView} from "@openspacelabs/react-native-zoomable-view"
 // import React from "react"
 
-const CoverDiaplay = () => {
+export const CoverDiaplay = () => {
     return (
         <View
             style={{
@@ -69,5 +69,3 @@ const styles = StyleSheet.create({
         width: "100%"
     }
 })
-
-export default CoverDiaplay
