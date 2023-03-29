@@ -12,8 +12,16 @@ export default function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Test" component={TestScreen} />
+                <Stack.Screen
+                    name="Home"
+                    component={HomeScreen}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen // FIXME: unter Home moven wenn fertig mit debuggen
+                    name="Test"
+                    component={TestScreen}
+                    options={{headerShown: false}}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )
