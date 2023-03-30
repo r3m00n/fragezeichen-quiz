@@ -13,10 +13,14 @@ import {CoverDisplay} from "../components/CoverDiaplay"
 import {isValideAnswer} from "../helpers/validateEpisodeAnswerHelper"
 import {getQuiz} from "../helpers/quizHelper"
 import {QuestionType} from "../types/types"
+import {AudioDisplay} from "../components/AudioDisplay"
 
 export const TestScreen = () => {
     const refInput = useRef()
-    const quiz = useMemo(() => getQuiz([QuestionType.summary]), [])
+    const quiz = useMemo(
+        () => getQuiz([QuestionType.audio, QuestionType.cover]),
+        []
+    )
     const [question, setQuestion] = useState(quiz[0])
     const [inputText, setInputText] = useState("")
     const [score, setScore] = useState(0)
@@ -48,19 +52,29 @@ export const TestScreen = () => {
         console.log(question.answer)
     }, [inputText])
 
+    const questionContent = useMemo(() => {
+        switch (question.structure.questionType) {
+            case QuestionType.audio:
+                return <AudioDisplay uri={question.metaData?.audio_url} />
+            case QuestionType.cover:
+                return (
+                    <CoverDisplay
+                        uri={question.metaData?.cover_url}
+                        isNew={question.metaData?.is_new}
+                    />
+                )
+        }
+    }, [question])
+
     return (
         <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Text>
-                {score}/{numberQuestions}{" "}
+                Score: {score}/{numberQuestions}
             </Text>
-            <Text style={styles.header}>
-                Wie heißt die Folge mit diesem Cover?{"\n"}
-                {question.metaData?.is_new ? "new" : "old"}
-            </Text>
-            <CoverDisplay
-                uri={question.metaData?.cover_url}
-                isNew={question.metaData?.is_new}
-            />
+            <Text style={styles.header}>{question.question}</Text>
+
+            {questionContent}
+
             <TextInput
                 style={styles.input}
                 value={inputText}

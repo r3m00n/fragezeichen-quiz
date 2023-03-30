@@ -17,7 +17,7 @@ export default function App() {
                     component={HomeScreen}
                     options={{headerShown: false}}
                 />
-                <Stack.Screen // FIXME: unter Home moven wenn fertig mit debuggen
+                <Stack.Screen
                     name="Question"
                     component={TestScreen}
                     options={{headerShown: false}}
