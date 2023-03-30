@@ -5,8 +5,8 @@
     "main": "src/index.js",
     "type": "module",
     "scripts": {
-        "scrape": "node src/scrape.js",
-        "upload": "node --no-warnings src/upload.js"
+        "scrape-episodes": "node src/scrapeEpisodes.js",
+        "upload-episodes": "node --no-warnings src/uploadEpisodes.js"
     },
     "keywords": [],
     "author": "",
