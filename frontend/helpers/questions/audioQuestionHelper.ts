@@ -1,4 +1,10 @@
-import {AnswerType, Episode, Question, QuestionType, Quiz} from "../types/types"
+import {
+    AnswerType,
+    Episode,
+    Question,
+    QuestionType,
+    Quiz
+} from "../../types/types"
 
 export const getAudioQuestions = (episodes: Episode[]): Quiz => {
     const episodesWithAudio = episodes.filter(e => e.mp3_urls.length)

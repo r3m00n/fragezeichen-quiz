@@ -4,7 +4,7 @@ import {NavigationContainer} from "@react-navigation/native"
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
 // Screens
 import {HomeScreen} from "./screens/HomeScreen"
-import {TestScreen} from "./screens/TestScreen"
+import {TestScreen} from "./screens/QuestionScreen"
 
 const Stack = createNativeStackNavigator()
 
@@ -18,7 +18,7 @@ export default function App() {
                     options={{headerShown: false}}
                 />
                 <Stack.Screen // FIXME: unter Home moven wenn fertig mit debuggen
-                    name="Test"
+                    name="Question"
                     component={TestScreen}
                     options={{headerShown: false}}
                 />

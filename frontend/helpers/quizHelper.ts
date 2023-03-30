@@ -2,11 +2,12 @@ import {episodes} from "../data/episodes.json"
 
 import {Episode, QuestionType, Quiz} from "../types/types"
 
-import {getAudioQuestions} from "./audioQuestionHelper"
-import {getCoverQuestions} from "./coverQuestionHelper"
-import {getDefaultQuestions} from "./defaultQuestionHelper"
-import {getQuoteQuestions} from "./quoteQuestionHelper"
-import {getTriviaQuestions} from "./triviaQuestionHelper"
+import {getAudioQuestions} from "./questions/audioQuestionHelper"
+import {getCoverQuestions} from "./questions/coverQuestionHelper"
+import {getDefaultQuestions} from "./questions/defaultQuestionHelper"
+import {getQuoteQuestions} from "./questions/quoteQuestionHelper"
+import {getSummaryQuestions} from "./questions/summaryQuestionHelper"
+import {getTriviaQuestions} from "./questions/triviaQuestionHelper"
 
 export const getQuiz = (types: QuestionType[]): Quiz => {
     if (types.length == 0) {
@@ -22,6 +23,8 @@ export const getQuiz = (types: QuestionType[]): Quiz => {
             case QuestionType.quote:
                 return getCoverQuestions(episodes)
             // return getQuoteQuestions()
+            case QuestionType.summary:
+                return getSummaryQuestions(episodes)
             case QuestionType.trivia:
                 return getCoverQuestions(episodes)
             // return getTriviaQuestions()

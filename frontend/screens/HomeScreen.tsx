@@ -10,7 +10,7 @@ export const HomeScreen = () => {
             <Text style={styles.text}>??? Quiz dies das</Text>
             <Button
                 title="Let's guess some of dem Covers, yo!"
-                onPress={() => navigation.navigate("Test")} // FIXME: https://stackoverflow.com/questions/73861337/no-overload-matches-this-call-error-react-native-navigation
+                onPress={() => navigation.navigate("Question")} // FIXME: https://stackoverflow.com/questions/73861337/no-overload-matches-this-call-error-react-native-navigation
             />
         </SafeAreaView>
     )

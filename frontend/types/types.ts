@@ -42,12 +42,13 @@ export interface QuestionStructure {
 }
 
 export enum QuestionType {
-    default = "default",
-    truth = "truth",
-    quote = "quote",
     audio = "audio",
     cover = "cover",
-    trivia = "trivia"
+    default = "default",
+    quote = "quote",
+    summary = "summary",
+    trivia = "trivia",
+    truth = "truth"
 }
 
 export enum AnswerType {

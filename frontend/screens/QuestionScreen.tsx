@@ -16,14 +16,14 @@ import {QuestionType} from "../types/types"
 
 export const TestScreen = () => {
     const refInput = useRef()
-    const quiz = useMemo(() => getQuiz([QuestionType.cover]), [])
+    const quiz = useMemo(() => getQuiz([QuestionType.summary]), [])
     const [question, setQuestion] = useState(quiz[0])
     const [inputText, setInputText] = useState("")
     const [score, setScore] = useState(0)
     const [numberQuestions, setNumberQuestions] = useState(0)
 
     useEffect(() => {
-        console.log(question.answer)
+        console.log(question.answer) // FIXME: nur 1x/Frage anzeigen
     }, [question])
 
     const handleInputChange = useCallback(
