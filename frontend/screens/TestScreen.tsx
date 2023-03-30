@@ -8,7 +8,7 @@ import {
     KeyboardAvoidingView
 } from "react-native"
 
-import {CoverDiaplay} from "../components/CoverDiaplay"
+import {CoverDisplay} from "../components/CoverDiaplay"
 
 import {isValideAnswer} from "../helpers/validateEpisodeAnswerHelper"
 import {getQuiz} from "../helpers/quizHelper"
@@ -52,13 +52,12 @@ export const TestScreen = () => {
         <KeyboardAvoidingView style={styles.container} behavior="padding">
             <Text>
                 {score}/{numberQuestions}{" "}
-                {/* {question.metaData?.is_new ? "new" : "old"} */}
             </Text>
             <Text style={styles.header}>
-                Wie heißt die Folge{"\n"}
-                mit diesem Cover?
+                Wie heißt die Folge mit diesem Cover?{"\n"}
+                {question.metaData?.is_new ? "new" : "old"}
             </Text>
-            <CoverDiaplay
+            <CoverDisplay
                 uri={question.metaData?.cover_url}
                 isNew={question.metaData?.is_new}
             />

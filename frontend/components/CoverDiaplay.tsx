@@ -7,7 +7,7 @@ interface CoverDisplayProps {
     isNew: boolean | undefined
 }
 
-export const CoverDiaplay = ({uri, isNew = true}: CoverDisplayProps) => {
+export const CoverDisplay = ({uri, isNew = true}: CoverDisplayProps) => {
     if (!uri) {
         return (
             <View>
@@ -20,13 +20,29 @@ export const CoverDiaplay = ({uri, isNew = true}: CoverDisplayProps) => {
 
     return (
         <View style={styles.container}>
-            {/* FIXME: idk y aber er kommt manchmal nicht auf die Styles klar */}
-            <ReactNativeZoomableView
-                initialOffsetX={isNew ? -22 : 2}
-                initialOffsetY={isNew ? -38 : -40}
-                initialZoom={isNew ? 1.38 : 1.48}>
-                <Image style={styles.image} source={{uri}} />
-            </ReactNativeZoomableView>
+            {/* FIXME:  er rerendert ReactNativeZoomableView nicht*/}
+            {/* <ReactNativeZoomableView
+                    initialOffsetX={isNew ? -22 : 2}
+                    initialOffsetY={isNew ? -38 : -40}
+                    initialZoom={isNew ? 1.38 : 1.48}>
+                    <Image style={styles.image} source={{uri}} />
+                </ReactNativeZoomableView> */}
+            {isNew ? (
+                <ReactNativeZoomableView
+                    initialOffsetX={-22}
+                    initialOffsetY={-38}
+                    initialZoom={1.38}>
+                    <Image style={styles.image} source={{uri}} />
+                </ReactNativeZoomableView>
+            ) : (
+                <ReactNativeZoomableView
+                    initialOffsetX={2}
+                    initialOffsetY={-40}
+                    initialZoom={1.48}>
+                    <Image style={styles.image} source={{uri}} />
+                </ReactNativeZoomableView>
+            )}
+
             <View style={styles.overlay} />
         </View>
     )
