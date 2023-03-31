@@ -13,7 +13,7 @@ export const HomeScreen = () => {
                 style={styles.button}
                 onPress={() => navigation.navigate("Question")}>
                 <Text style={styles.buttonText}>
-                    Let's guess some of dem{"\n"}Covers & Hörpoben, yo!
+                    Wir haben Covers,{"\n"}Hörpoben & Summaries!
                 </Text>
             </Pressable>
         </SafeAreaView>

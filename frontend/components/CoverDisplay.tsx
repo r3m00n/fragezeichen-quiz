@@ -12,7 +12,7 @@ export const CoverDisplay = ({uri, isNew = true}: CoverDisplayProps) => {
         return (
             <View>
                 <Text style={styles.errorText}>
-                    Error Loading Image{"\n"}(no url provided)
+                    Error Loading Image{"\n"}(no uri provided)
                 </Text>
             </View>
         )

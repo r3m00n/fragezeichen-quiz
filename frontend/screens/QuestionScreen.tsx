@@ -8,17 +8,23 @@ import {
     KeyboardAvoidingView
 } from "react-native"
 
-import {CoverDisplay} from "../components/CoverDiaplay"
+import {CoverDisplay} from "../components/CoverDisplay"
 
 import {isValideAnswer} from "../helpers/validateEpisodeAnswerHelper"
 import {getQuiz} from "../helpers/quizHelper"
 import {QuestionType} from "../types/types"
 import {AudioDisplay} from "../components/AudioDisplay"
+import {SummaryDisplay} from "../components/SummaryDisplay"
 
 export const TestScreen = () => {
     const refInput = useRef()
     const quiz = useMemo(
-        () => getQuiz([QuestionType.audio, QuestionType.cover]),
+        () =>
+            getQuiz([
+                QuestionType.summary,
+                QuestionType.audio,
+                QuestionType.cover
+            ]),
         []
     )
     const [question, setQuestion] = useState(quiz[0])
@@ -63,6 +69,8 @@ export const TestScreen = () => {
                         isNew={question.metaData?.is_new}
                     />
                 )
+            case QuestionType.summary:
+                return <SummaryDisplay summary={question.metaData?.summary} />
         }
     }, [question])
 

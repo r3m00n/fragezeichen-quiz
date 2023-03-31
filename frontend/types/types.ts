@@ -61,4 +61,5 @@ interface QuestionMetaData {
     cover_url?: string
     audio_url?: string
     is_new?: boolean
+    summary?: string
 }

@@ -16,6 +16,8 @@ export const getSummaryQuestions = (episodes: Episode[]): Quiz => {
         },
         question: "Wie heißt die Folge mit dieser Beschreibung?",
         answer: episode.title,
-        summary: episode.summary
+        metaData: {
+            summary: episode.summary
+        }
     })) as Question[]
 }

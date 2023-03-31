@@ -11,7 +11,7 @@ export const AudioDisplay = ({uri}: CoverDisplayProps) => {
         return (
             <View>
                 <Text style={styles.errorText}>
-                    Error Loading Image{"\n"}(no url provided)
+                    Error Loading Audio{"\n"}(no uri provided)
                 </Text>
             </View>
         )
