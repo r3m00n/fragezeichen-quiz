@@ -1,13 +1,15 @@
 import {useNavigation} from "@react-navigation/native"
-import React, {useLayoutEffect} from "react"
-import {StyleSheet, SafeAreaView, Text, Button, Pressable} from "react-native"
+import React from "react"
+import {StyleSheet, SafeAreaView, Text, Pressable} from "react-native"
+
+import {FragezeichenBanner} from "../components/FragezeichenBanner"
 
 export const HomeScreen = () => {
     const navigation = useNavigation()
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>??? Quiz dies das</Text>
+            <FragezeichenBanner />
             {/* FIXME: https://stackoverflow.com/questions/73861337/no-overload-matches-this-call-error-react-native-navigation */}
             <Pressable
                 style={styles.button}
@@ -23,9 +25,7 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "space-evenly",
-        padding: 20
+        backgroundColor: "#000"
     },
     text: {
         fontSize: 24
