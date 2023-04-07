@@ -10,7 +10,7 @@ import {TestScreen} from "./screens/QuestionScreen"
 const Stack = createNativeStackNavigator()
 
 export default function App() {
-    // importing fonts
+    // importing fonts  TODO: schauen ob man das auch auslagern kann
     const [fontLoaded, setFontLoaded] = useState(false)
 
     const loadFonts = async () => {
@@ -19,6 +19,9 @@ export default function App() {
         })
         await Font.loadAsync({
             RobotoCondensed: require("./assets/fonts/RobotoCondensed-Regular.ttf")
+        })
+        await Font.loadAsync({
+            RobotoCondensedLight: require("./assets/fonts/RobotoCondensed-Light.ttf")
         })
         setFontLoaded(true)
     }
