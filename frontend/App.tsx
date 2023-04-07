@@ -5,10 +5,12 @@ import {NavigationContainer} from "@react-navigation/native"
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
 // Screens
 import {HomeScreen} from "./screens/HomeScreen"
+import {ContributorsScreen} from "./screens/ContributorsScreen"
+import {DisclaimerScreen} from "./screens/DisclaimerScreen"
 import {TestScreen} from "./screens/QuestionScreen"
 // Headers
 import {FragezeichenBanner} from "./components/FragezeichenBanner"
-import {BannerPlantHeader} from "./components/BannerPlantHeader"
+import {Header} from "./components/Header"
 
 const Stack = createNativeStackNavigator()
 
@@ -42,7 +44,7 @@ export default function App() {
                     component={HomeScreen}
                     options={{
                         animation: "none",
-                        header: () => <BannerPlantHeader />
+                        header: () => <Header showPlant={true} />
                     }}
                     // options={{headerShown: false}}
                 />
@@ -51,9 +53,24 @@ export default function App() {
                     component={TestScreen}
                     options={{
                         animation: "fade",
-                        header: () => <FragezeichenBanner />
+                        header: () => <Header />
                     }}
-                    // options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="Contributors"
+                    component={ContributorsScreen}
+                    options={{
+                        animation: "fade",
+                        header: () => <Header showPlant={true} />
+                    }}
+                />
+                <Stack.Screen
+                    name="Disclaimer"
+                    component={DisclaimerScreen}
+                    options={{
+                        animation: "fade",
+                        header: () => <Header showPlant={true} />
+                    }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

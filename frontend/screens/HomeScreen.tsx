@@ -53,13 +53,11 @@ export const HomeScreen = () => {
                 />
                 <Button
                     text={"Mitwirkende"}
-                    isPrimary={false}
-                    onPress={() => console.log("Mitwirkende")}
+                    onPress={() => navigation.navigate("Contributors")}
                 />
                 <Button
                     text={"Haftungsausschluss"}
-                    isPrimary={false}
-                    onPress={() => console.log("Haftungsausschluss")}
+                    onPress={() => navigation.navigate("Disclaimer")}
                 />
             </View>
         </SafeAreaView>
@@ -71,27 +69,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#000",
         display: "flex",
-        alignItems: "center"
-    },
-    text: {
-        fontSize: 24,
-        margibVertical: 80
-    },
-    imageContainer: {
-        height: 250,
-        left: 32,
-        alignSelf: "stretch",
+        alignItems: "center",
         position: "relative"
     },
-    image: {
-        position: "absolute",
-        top: 150
-    },
-    tendril: {
-        zIndex: 10
-    },
     buttonContainer: {
-        marginTop: 240,
+        marginTop: 190,
         padding: 30,
         marginBottom: 10,
         alignSelf: "stretch"

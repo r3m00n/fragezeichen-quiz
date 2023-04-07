@@ -3,11 +3,15 @@ import {SafeAreaView, StyleSheet} from "react-native"
 import {AnimatedPlant} from "./AnimatedPlant"
 import {FragezeichenBanner} from "./FragezeichenBanner"
 
-export const BannerPlantHeader = () => {
+interface HeaderProps {
+    showPlant?: boolean
+}
+
+export const Header = ({showPlant = false}: HeaderProps) => {
     return (
         <SafeAreaView style={styles.container}>
             <FragezeichenBanner />
-            <AnimatedPlant />
+            {showPlant && <AnimatedPlant />}
         </SafeAreaView>
     )
 }

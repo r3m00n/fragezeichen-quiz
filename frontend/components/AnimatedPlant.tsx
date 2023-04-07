@@ -44,17 +44,16 @@ export const AnimatedPlant = () => {
 
 const styles = StyleSheet.create({
     imageContainer: {
+        width: "100%",
         height: 250,
-        left: 32,
+        top: 130,
         alignSelf: "stretch",
-        position: "absolute"
+        position: "absolute",
+        transform: [{scale: 0.8}],
+        display: "flex",
+        alignItems: "center"
     },
     image: {
-        position: "absolute",
-        top: 150,
-        zIndex: 0
-    },
-    tendril: {
-        zIndex: 10
+        position: "absolute"
     }
 })

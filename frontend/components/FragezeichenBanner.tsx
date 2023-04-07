@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         fontSize: 50,
         color: "#fff",
         fontFamily: "HelveticaNeueLTProBdCn",
-        fontWeight: "700"
+        fontWeight: "700" // useless
     },
     red: {color: "#E91B24"},
     blue: {color: "#02ABEB"}

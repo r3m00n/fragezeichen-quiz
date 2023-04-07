@@ -2,14 +2,15 @@ import {Text, StyleSheet, TouchableOpacity} from "react-native"
 import React from "react"
 
 interface ButtonProps {
-    text: string | undefined
-    isPrimary: boolean | undefined
-    onPress: () => void
+    text?: string
+    isPrimary?: boolean
+    onPress?: () => void
 }
 
+// TODO: Styles (wie zB mb) übergeben können
 export const Button = ({
     text = "Click me",
-    isPrimary = true,
+    isPrimary = false,
     onPress
 }: ButtonProps) => {
     return (
