@@ -1,14 +1,14 @@
-import {View, Text, StyleSheet} from "react-native"
+import {SafeAreaView, Text, StyleSheet} from "react-native"
 import React from "react"
 
 export const FragezeichenBanner = () => {
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.text}>
                 Die drei ?<Text style={styles.red}>?</Text>
                 <Text style={styles.blue}>?</Text> Quiz
             </Text>
-        </View>
+        </SafeAreaView>
     )
 }
 

@@ -11,7 +11,6 @@ import {
     Easing
 } from "react-native"
 
-import {FragezeichenBanner} from "../components/FragezeichenBanner"
 import {Button} from "../components/Button"
 
 export const HomeScreen = () => {
@@ -45,28 +44,6 @@ export const HomeScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <FragezeichenBanner />
-            {/* <View style={styles.imageContainer}> */}
-            <Image
-                style={styles.image}
-                source={require("../assets/plant/main.png")}
-            />
-            <Image
-                style={styles.image}
-                source={require("../assets/plant/pine2.png")}
-            />
-            <Animated.Image
-                style={[
-                    styles.image,
-                    styles.pine,
-                    {transform: [{rotate: spin}]}
-                ]}
-                source={require("../assets/plant/pine.png")}
-            />
-            <View pointerEvents="none" style={[styles.image, styles.tendril]}>
-                <Image source={require("../assets/plant/tendril.png")} />
-            </View>
-            {/* </View> */}
             <View style={styles.buttonContainer}>
                 <Button
                     text={"Jetzt spielen"}
@@ -109,10 +86,6 @@ const styles = StyleSheet.create({
     image: {
         position: "absolute",
         top: 150
-    },
-    pine: {
-        // transform: [{translateX: 100}, {translateY: 300}]
-        transform: [{rotate: "-20deg"}]
     },
     tendril: {
         zIndex: 10

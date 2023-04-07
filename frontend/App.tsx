@@ -6,6 +6,9 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack"
 // Screens
 import {HomeScreen} from "./screens/HomeScreen"
 import {TestScreen} from "./screens/QuestionScreen"
+// Headers
+import {FragezeichenBanner} from "./components/FragezeichenBanner"
+import {BannerPlantHeader} from "./components/BannerPlantHeader"
 
 const Stack = createNativeStackNavigator()
 
@@ -37,12 +40,20 @@ export default function App() {
                 <Stack.Screen
                     name="Home"
                     component={HomeScreen}
-                    options={{headerShown: false}}
+                    options={{
+                        animation: "none",
+                        header: () => <BannerPlantHeader />
+                    }}
+                    // options={{headerShown: false}}
                 />
                 <Stack.Screen
                     name="Question"
                     component={TestScreen}
-                    options={{headerShown: false}}
+                    options={{
+                        animation: "fade",
+                        header: () => <FragezeichenBanner />
+                    }}
+                    // options={{headerShown: false}}
                 />
             </Stack.Navigator>
         </NavigationContainer>
