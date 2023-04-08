@@ -32,7 +32,7 @@ export const ContributorsScreen = () => {
                 <Button
                     text={"Zurück"}
                     isPrimary={true}
-                    onPress={() => navigation.navigate("Home")}
+                    onPress={() => navigation.navigate("Home" as never)}
                 />
             </View>
             <Text style={styles.version}>v{version}</Text>

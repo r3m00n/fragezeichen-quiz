@@ -23,7 +23,7 @@ export const DisclaimerScreen = () => {
                 <Button
                     text={"Zurück"}
                     isPrimary={true}
-                    onPress={() => navigation.navigate("Home")}
+                    onPress={() => navigation.navigate("Home" as never)}
                 />
             </View>
         </SafeAreaView>
