@@ -9,6 +9,8 @@ import {
     View
 } from "react-native"
 
+import {isValideAnswer} from "../helpers/validateEpisodeAnswerHelper"
+
 import {QuestionType} from "../types/types"
 import {getQuiz} from "../helpers/quizHelper"
 import {Button} from "../components/Button"
@@ -33,7 +35,7 @@ export const QuestionScreen = ({
     const [inputText, setInputText] = useState("")
 
     useEffect(() => {
-        console.log(question.answer) // FIXME: nur 1x/Frage anzeigen
+        console.log(question.answer)
     }, [question])
 
     const handleInputChange = useCallback(
@@ -43,10 +45,20 @@ export const QuestionScreen = ({
         [setInputText]
     )
 
-    const handleBlur = () => {
-        // console.log("blures")
-        Keyboard.dismiss()
-    }
+    const handleSubmit = useCallback(() => {
+        if (!inputText) return
+
+        // Keyboard.dismiss()
+        setNumberQuestions(numberQuestions + 1)
+        if (isValideAnswer(inputText, question.answer)) {
+            setScore(score + 1)
+        } else {
+            console.log("leider falsch")
+        }
+
+        setQuestion(quiz[numberQuestions + 1])
+        setInputText("")
+    }, [inputText])
 
     return (
         <SafeAreaView style={styles.wrapper}>
@@ -60,14 +72,17 @@ export const QuestionScreen = ({
                     placeholder="Rein mit der Antwort"
                     value={inputText}
                     onChangeText={handleInputChange}
-                    onBlur={handleBlur}
+                    onSubmitEditing={handleSubmit}
+                    blurOnSubmit={false}
+                    // onBlur={() => Keyboard.dismiss()}
                 />
             </View>
-            <KeyboardAvoidingView style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
                 <Button
                     text="Bestätigen"
                     isPrimary={true}
                     style={{alignSelf: "stretch"}}
+                    onPress={handleSubmit}
                 />
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -103,7 +118,6 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 50,
-        // width: 255,
         alignSelf: "stretch",
         marginTop: 10,
         padding: 10,
