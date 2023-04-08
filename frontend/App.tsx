@@ -4,12 +4,12 @@ import * as Font from "expo-font"
 import {NavigationContainer} from "@react-navigation/native"
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
 // Screens
-import {HomeScreen} from "./screens/HomeScreen"
 import {ContributorsScreen} from "./screens/ContributorsScreen"
 import {DisclaimerScreen} from "./screens/DisclaimerScreen"
+import {HomeScreen} from "./screens/HomeScreen"
+import {SelectionScreen} from "./screens/SelectionScreen"
 import {TestScreen} from "./screens/QuestionScreen"
-// Headers
-import {FragezeichenBanner} from "./components/FragezeichenBanner"
+// Header
 import {Header} from "./components/Header"
 
 const Stack = createNativeStackNavigator()
@@ -47,6 +47,14 @@ export default function App() {
                         header: () => <Header showPlant={true} />
                     }}
                     // options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="Selection"
+                    component={SelectionScreen}
+                    options={{
+                        animation: "fade",
+                        header: () => <Header showPlant={true} />
+                    }}
                 />
                 <Stack.Screen
                     name="Question"

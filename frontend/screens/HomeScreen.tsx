@@ -48,16 +48,17 @@ export const HomeScreen = () => {
                 <Button
                     text={"Jetzt spielen"}
                     isPrimary={true}
-                    // FIXME: https://stackoverflow.com/questions/73861337/no-overload-matches-this-call-error-react-native-navigation
-                    onPress={() => navigation.navigate("Question")}
+                    onPress={() => navigation.navigate("Selection" as never)}
+                    style={{marginBottom: 16}}
                 />
                 <Button
                     text={"Mitwirkende"}
-                    onPress={() => navigation.navigate("Contributors")}
+                    onPress={() => navigation.navigate("Contributors" as never)}
+                    style={styles.button}
                 />
                 <Button
                     text={"Haftungsausschluss"}
-                    onPress={() => navigation.navigate("Disclaimer")}
+                    onPress={() => navigation.navigate("Disclaimer" as never)}
                 />
             </View>
         </SafeAreaView>
@@ -77,5 +78,8 @@ const styles = StyleSheet.create({
         padding: 30,
         marginBottom: 10,
         alignSelf: "stretch"
+    },
+    button: {
+        marginBottom: 16
     }
 })

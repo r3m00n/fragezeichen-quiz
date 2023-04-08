@@ -1,26 +1,36 @@
-import {Text, StyleSheet, TouchableOpacity} from "react-native"
+import {Text, StyleSheet, TouchableOpacity, ViewStyle} from "react-native"
 import React from "react"
 
 interface ButtonProps {
     text?: string
     isPrimary?: boolean
     onPress?: () => void
+    style?: ViewStyle
+    isInactive?: boolean
 }
 
-// TODO: Styles (wie zB mb) übergeben können
 export const Button = ({
     text = "Click me",
     isPrimary = false,
-    onPress
+    onPress,
+    style,
+    isInactive = false
 }: ButtonProps) => {
     return (
         <TouchableOpacity
             onPress={onPress}
             style={[
                 styles.container,
-                !isPrimary && styles.notPrimaryContainer
+                !isPrimary && styles.notPrimaryContainer,
+                style,
+                isInactive && styles.inactive
             ]}>
-            <Text style={[styles.text, !isPrimary && styles.notPrimaryText]}>
+            <Text
+                style={[
+                    styles.text,
+                    !isPrimary && styles.notPrimaryText,
+                    isInactive && styles.inactive
+                ]}>
                 {text}
             </Text>
         </TouchableOpacity>
@@ -36,8 +46,7 @@ const styles = StyleSheet.create({
         borderColor: "rgba(255, 255, 255, 0.5)",
         display: "flex",
         justifyContent: "center",
-        backgroundColor: "#000",
-        marginBottom: 16 // FIXME: scheiße, das hier drin zu machen
+        backgroundColor: "#000"
     },
     notPrimaryContainer: {
         borderColor: "rgba(255, 255, 255, 0.3)"
@@ -52,5 +61,9 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontFamily: "RobotoCondensedLight",
         color: "rgba(255, 255, 255, 0.6)"
+    },
+    inactive: {
+        color: "rgba(255, 255, 255, 0.3)",
+        borderColor: "rgba(255, 255, 255, 0.2)"
     }
 })

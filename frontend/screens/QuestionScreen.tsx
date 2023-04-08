@@ -16,17 +16,22 @@ import {QuestionType} from "../types/types"
 import {AudioDisplay} from "../components/AudioDisplay"
 import {SummaryDisplay} from "../components/SummaryDisplay"
 
-export const TestScreen = () => {
+type DetailsScreenProps = {
+    route: {
+        params: {
+            questionTypes: QuestionType[]
+        }
+    }
+}
+
+export const TestScreen = ({
+    route: {
+        params: {questionTypes}
+    }
+}: DetailsScreenProps) => {
     const refInput = useRef()
-    const quiz = useMemo(
-        () =>
-            getQuiz([
-                QuestionType.summary,
-                QuestionType.audio,
-                QuestionType.cover
-            ]),
-        []
-    )
+    // const quiz = useMemo(() =>getQuiz([QuestionType.summary,QuestionType.audio,QuestionType.cover]),[])
+    const quiz = useMemo(() => getQuiz(questionTypes), [])
     const [question, setQuestion] = useState(quiz[0])
     const [inputText, setInputText] = useState("")
     const [score, setScore] = useState(0)
