@@ -17,6 +17,7 @@ import {Selectable} from "../components/Selectable"
 export const SelectionScreen = () => {
     const navigation = useNavigation()
     const [selectedTypes, setSelectedTypes] = useState<QuestionType[]>([])
+    const [isHighlighted, setIsHighlighted] = useState(false)
 
     useEffect(() => {
         setSelectedTypes(GAMEMODES.map(g => g.type))
@@ -31,20 +32,26 @@ export const SelectionScreen = () => {
     }
 
     const handleStart = () => {
-        if (!selectedTypes.length) return
-        navigation.navigate(
-            "Question" as never,
-            {
-                questionTypes: selectedTypes
-            } as never
-        )
+        if (!selectedTypes.length) {
+            setIsHighlighted(true)
+            setTimeout(() => {
+                setIsHighlighted(false)
+            }, 1000)
+        } else {
+            navigation.navigate(
+                "Question" as never,
+                {
+                    questionTypes: selectedTypes
+                } as never
+            )
+        }
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.selectionContainer}>
                 <Headline text={"Spielkategorien"} />
-                <Text style={styles.text}>
+                <Text style={[styles.text, styles.topText]}>
                     Wähle die Kategorien, von denen du{"\n"}die Folgen erraten
                     möchtest.
                 </Text>
@@ -57,7 +64,11 @@ export const SelectionScreen = () => {
                     />
                 ))}
                 {!selectedTypes.length && (
-                    <Text style={styles.text}>
+                    <Text
+                        style={[
+                            styles.text,
+                            isHighlighted && {color: "#E91B24"}
+                        ]}>
                         Zum starten mindestens eine Kategorie auswählen.
                     </Text>
                 )}
@@ -88,13 +99,15 @@ const styles = StyleSheet.create({
         marginBottom: 24
     },
     text: {
-        marginVertical: 16,
+        marginVertical: 6,
         color: "#fff",
         textAlign: "center",
         fontSize: 16,
         fontFamily: "RobotoCondensedLight"
     },
-    button: {
-        marginTop: 8
-    }
+    topText: {
+        marginTop: 10,
+        marginVertical: 4
+    },
+    button: {marginTop: 8}
 })

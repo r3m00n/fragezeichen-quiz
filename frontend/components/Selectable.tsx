@@ -38,7 +38,7 @@ export const Selectable = ({title, onSelect, type}: SelectableProps) => {
 const styles = StyleSheet.create({
     container: {
         height: 55,
-        marginBottom: 12,
+        marginVertical: 6,
         paddingHorizontal: 16,
         borderRadius: 15,
         borderWidth: 1.25,
