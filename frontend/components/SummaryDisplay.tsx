@@ -1,36 +1,36 @@
-import {StyleSheet, View, Text, Image} from "react-native"
+import {StyleSheet, View, Text, ScrollView} from "react-native"
 // import React from "react"
 
 interface CoverDisplayProps {
     summary: string | undefined
 }
 
-export const SummaryDisplay = ({summary}: CoverDisplayProps) => {
-    if (!summary) {
-        return (
-            <View>
-                <Text style={styles.errorText}>
-                    No Summary provided{"\n"}Next Question please
-                </Text>
-            </View>
-        )
-    }
-
+export const SummaryDisplay = ({
+    summary = "No Summary provided :/"
+}: CoverDisplayProps) => {
     return (
-        <View style={styles.container}>
+        <ScrollView
+            style={styles.container}
+            scrollEnabled={summary.length > 530}>
             <Text style={styles.summary}>{summary}</Text>
-        </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: 300,
-        flexShrink: 1
+        flexShrink: 1,
+        // alignSelf: "stretch",
+        // width: 255,
+        padding: 10,
+        paddingLeft: 0,
+        backgroundColor: "#000"
     },
     summary: {
         fontSize: 16,
-        textAlign: "justify"
+        textAlign: "justify",
+        color: "#fff",
+        marginBottom: 10
     },
     errorText: {
         color: "red",

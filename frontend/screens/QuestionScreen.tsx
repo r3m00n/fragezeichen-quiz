@@ -14,6 +14,9 @@ import {isValideAnswer} from "../helpers/validateEpisodeAnswerHelper"
 import {QuestionType} from "../types/types"
 import {getQuiz} from "../helpers/quizHelper"
 import {Button} from "../components/Button"
+import {AudioDisplay} from "../components/AudioDisplay"
+import {CoverDisplay} from "../components/CoverDisplay"
+import {SummaryDisplay} from "../components/SummaryDisplay"
 
 type DetailsScreenProps = {
     route: {
@@ -33,6 +36,7 @@ export const QuestionScreen = ({
     const [score, setScore] = useState(0)
     const [numberQuestions, setNumberQuestions] = useState(0)
     const [inputText, setInputText] = useState("")
+    const [inputColor, setInputColor] = useState("#fff")
 
     useEffect(() => {
         console.log(question.answer)
@@ -52,13 +56,35 @@ export const QuestionScreen = ({
         setNumberQuestions(numberQuestions + 1)
         if (isValideAnswer(inputText, question.answer)) {
             setScore(score + 1)
+            setInputColor("#0f0")
         } else {
-            console.log("leider falsch")
+            setInputColor("#f00")
+            setInputText(question.answer)
         }
 
-        setQuestion(quiz[numberQuestions + 1])
-        setInputText("")
+        setTimeout(() => {
+            setQuestion(quiz[numberQuestions + 1])
+            setInputText("")
+            setInputColor("#fff")
+        }, 2000)
     }, [inputText])
+
+    // TODO: als Component (hier drin) machen
+    const questionContent = useMemo(() => {
+        switch (question.structure.questionType) {
+            case QuestionType.audio:
+                return <AudioDisplay uri={question.metaData?.audio_url} />
+            case QuestionType.cover:
+                return (
+                    <CoverDisplay
+                        uri={question.metaData?.cover_url}
+                        isNew={question.metaData?.is_new}
+                    />
+                )
+            case QuestionType.summary:
+                return <SummaryDisplay summary={question.metaData?.summary} />
+        }
+    }, [question])
 
     return (
         <SafeAreaView style={styles.wrapper}>
@@ -66,9 +92,9 @@ export const QuestionScreen = ({
                 <Text style={[styles.text, styles.score]}>
                     Score: {score}/{numberQuestions}
                 </Text>
-                <View style={styles.action}></View>
+                <View style={styles.action}>{questionContent}</View>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, {color: inputColor}]}
                     placeholder="Rein mit der Antwort"
                     value={inputText}
                     onChangeText={handleInputChange}
@@ -108,13 +134,13 @@ const styles = StyleSheet.create({
     score: {
         fontSize: 24,
         fontFamily: "HelveticaNeueLTProBdCn"
-        // fontFamily: "RobotoCondensed"
     },
     action: {
-        width: 255,
+        alignSelf: "stretch",
         height: 255,
-        backgroundColor: "#0f0",
-        borderRadius: 12
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center"
     },
     input: {
         height: 50,
@@ -125,6 +151,7 @@ const styles = StyleSheet.create({
         borderColor: "rgba(255, 255, 255, 0.3)",
         borderRadius: 15,
         color: "#fff",
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: "RobotoCondensed"
     }
 })
