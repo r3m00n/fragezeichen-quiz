@@ -1,20 +1,17 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react"
+import React, {useCallback, useEffect, useMemo, useState} from "react"
 import {
-    Button,
+    Keyboard,
+    KeyboardAvoidingView,
     SafeAreaView,
     StyleSheet,
     Text,
     TextInput,
-    KeyboardAvoidingView
+    View
 } from "react-native"
 
-import {CoverDisplay} from "../components/CoverDisplay"
-
-import {isValideAnswer} from "../helpers/validateEpisodeAnswerHelper"
-import {getQuiz} from "../helpers/quizHelper"
 import {QuestionType} from "../types/types"
-import {AudioDisplay} from "../components/AudioDisplay"
-import {SummaryDisplay} from "../components/SummaryDisplay"
+import {getQuiz} from "../helpers/quizHelper"
+import {Button} from "../components/Button"
 
 type DetailsScreenProps = {
     route: {
@@ -24,18 +21,16 @@ type DetailsScreenProps = {
     }
 }
 
-export const TestScreen = ({
+export const QuestionScreen = ({
     route: {
-        params: {questionTypes}
+        params: {questionTypes = [QuestionType.cover]}
     }
 }: DetailsScreenProps) => {
-    const refInput = useRef()
-    // const quiz = useMemo(() =>getQuiz([QuestionType.summary,QuestionType.audio,QuestionType.cover]),[])
     const quiz = useMemo(() => getQuiz(questionTypes), [])
     const [question, setQuestion] = useState(quiz[0])
-    const [inputText, setInputText] = useState("")
     const [score, setScore] = useState(0)
     const [numberQuestions, setNumberQuestions] = useState(0)
+    const [inputText, setInputText] = useState("")
 
     useEffect(() => {
         console.log(question.answer) // FIXME: nur 1x/Frage anzeigen
@@ -48,81 +43,74 @@ export const TestScreen = ({
         [setInputText]
     )
 
-    const handleSubmit = useCallback(() => {
-        if (!inputText) return
-
-        setNumberQuestions(numberQuestions + 1)
-        if (isValideAnswer(inputText, question.answer)) {
-            setScore(score + 1)
-        } else {
-        }
-
-        setQuestion(quiz[numberQuestions + 1]) // FIXME: das kann sich doch keiner geben
-        setInputText("")
-        refInput.current.focus()
-        console.log(question.answer)
-    }, [inputText])
-
-    const questionContent = useMemo(() => {
-        switch (question.structure.questionType) {
-            case QuestionType.audio:
-                return <AudioDisplay uri={question.metaData?.audio_url} />
-            case QuestionType.cover:
-                return (
-                    <CoverDisplay
-                        uri={question.metaData?.cover_url}
-                        isNew={question.metaData?.is_new}
-                    />
-                )
-            case QuestionType.summary:
-                return <SummaryDisplay summary={question.metaData?.summary} />
-        }
-    }, [question])
+    const handleBlur = () => {
+        // console.log("blures")
+        Keyboard.dismiss()
+    }
 
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="padding">
-            <Text>
-                Score: {score}/{numberQuestions}
-            </Text>
-            <Text style={styles.header}>{question.question}</Text>
-
-            {questionContent}
-
-            <TextInput
-                style={styles.input}
-                value={inputText}
-                onChangeText={handleInputChange}
-                onSubmitEditing={handleSubmit}
-                placeholder="Answer here pls"
-                // autoFocus={true}
-                returnKeyType="next"
-                ref={refInput}
-                blurOnSubmit={false}
-            />
-            <Button title="Checkerino" onPress={handleSubmit} />
-        </KeyboardAvoidingView>
+        <SafeAreaView style={styles.wrapper}>
+            <View style={styles.container}>
+                <Text style={[styles.text, styles.score]}>
+                    Score: {score}/{numberQuestions}
+                </Text>
+                <View style={styles.action}></View>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Rein mit der Antwort"
+                    value={inputText}
+                    onChangeText={handleInputChange}
+                    onBlur={handleBlur}
+                />
+            </View>
+            <KeyboardAvoidingView style={styles.container}>
+                <Button
+                    text="Bestätigen"
+                    isPrimary={true}
+                    style={{alignSelf: "stretch"}}
+                />
+            </KeyboardAvoidingView>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        position: "relative",
+    wrapper: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 20
+        backgroundColor: "#000",
+        display: "flex",
+        justifyContent: "space-between"
     },
-    header: {
+    container: {
+        paddingHorizontal: 30,
+        display: "flex",
+        alignItems: "center"
+    },
+    text: {
+        color: "#fff",
+        textAlign: "center"
+    },
+    score: {
         fontSize: 24,
-        textAlign: "center",
-        marginBottom: 8
+        fontFamily: "HelveticaNeueLTProBdCn"
+        // fontFamily: "RobotoCondensed"
+    },
+    action: {
+        width: 255,
+        height: 255,
+        backgroundColor: "#0f0",
+        borderRadius: 12
     },
     input: {
-        height: 40,
-        width: "80%",
-        borderRadius: 6,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10
+        height: 50,
+        // width: 255,
+        alignSelf: "stretch",
+        marginTop: 10,
+        padding: 10,
+        borderWidth: 1.5,
+        borderColor: "rgba(255, 255, 255, 0.3)",
+        borderRadius: 15,
+        color: "#fff",
+        fontSize: 16
     }
 })

@@ -8,7 +8,7 @@ import {ContributorsScreen} from "./screens/ContributorsScreen"
 import {DisclaimerScreen} from "./screens/DisclaimerScreen"
 import {HomeScreen} from "./screens/HomeScreen"
 import {SelectionScreen} from "./screens/SelectionScreen"
-import {TestScreen} from "./screens/QuestionScreen"
+import {QuestionScreen} from "./screens/QuestionScreen"
 // Header
 import {Header} from "./components/Header"
 
@@ -58,7 +58,7 @@ export default function App() {
                 />
                 <Stack.Screen
                     name="Question"
-                    component={TestScreen}
+                    component={QuestionScreen}
                     options={{
                         animation: "fade",
                         header: () => <Header />

@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
         color: "#fff",
         textAlign: "justify",
         fontSize: 18,
-        // fontFamily: "RobotoCondensed"
         fontFamily: "RobotoCondensedLight"
     }
 })
