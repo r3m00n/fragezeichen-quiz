@@ -58,9 +58,9 @@ export const QuestionScreen = ({
         setNumberQuestions(numberQuestions + 1)
         if (isValideAnswer(inputText, question.answer)) {
             setScore(score + 1)
-            setInputColor("#0f0")
+            setInputColor("#02ABEB")
         } else {
-            setInputColor("#f00")
+            setInputColor("#E91B24")
             setInputText(question.answer)
         }
 
