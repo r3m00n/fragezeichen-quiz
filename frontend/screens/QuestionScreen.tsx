@@ -2,15 +2,12 @@ import React, {useCallback, useEffect, useMemo, useState} from "react"
 import {
     Keyboard,
     KeyboardAvoidingView,
-    SafeAreaView,
     StyleSheet,
     Text,
     TextInput,
     View
 } from "react-native"
-
 import {isValideAnswer} from "../helpers/validateEpisodeAnswerHelper"
-
 import {QuestionType} from "../types/types"
 import {getQuiz} from "../helpers/quizHelper"
 import {Button} from "../components/Button"
@@ -19,19 +16,18 @@ import {CoverDisplay} from "../components/CoverDisplay"
 import {SummaryDisplay} from "../components/SummaryDisplay"
 
 type DetailsScreenProps = {
-    route: {
+    route?: {
         params: {
             questionTypes: QuestionType[]
         }
     }
 }
 
-export const QuestionScreen = ({
-    route: {
-        params: {questionTypes = [QuestionType.cover]}
-    }
-}: DetailsScreenProps) => {
-    const quiz = useMemo(() => getQuiz(questionTypes), [])
+export const QuestionScreen = (props: DetailsScreenProps) => {
+    const questionTypes = useMemo(() => {
+        return props.route?.params.questionTypes ?? [QuestionType.cover]
+    }, [props])
+    const quiz = useMemo(() => getQuiz(questionTypes), [questionTypes])
     const [question, setQuestion] = useState(quiz[0])
     const [score, setScore] = useState(0)
     const [numberQuestions, setNumberQuestions] = useState(0)

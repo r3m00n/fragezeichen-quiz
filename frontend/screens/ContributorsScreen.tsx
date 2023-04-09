@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     version: {
         position: "absolute",
-        bottom: 10,
+        bottom: 70,
         right: 30,
         color: "#aaa"
     }

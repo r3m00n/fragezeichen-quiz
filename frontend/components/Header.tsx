@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet} from "react-native"
+import {SafeAreaView} from "react-native"
 
 import {AnimatedPlant} from "./AnimatedPlant"
 import {FragezeichenBanner} from "./FragezeichenBanner"
@@ -9,16 +9,9 @@ interface HeaderProps {
 
 export const Header = ({showPlant = false}: HeaderProps) => {
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView>
             <FragezeichenBanner />
             {showPlant && <AnimatedPlant />}
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#000"
-        // paddingTop: 25
-    }
-})

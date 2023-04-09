@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import * as Font from "expo-font"
+import {Platform, StyleSheet} from "react-native"
 import {SafeAreaProvider} from "react-native-safe-area-context"
 // Navigation
 import {NavigationContainer} from "@react-navigation/native"
@@ -38,7 +39,7 @@ export default function App() {
     }
 
     return (
-        <SafeAreaProvider>
+        <SafeAreaProvider style={styles.wrapper}>
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen
@@ -87,3 +88,10 @@ export default function App() {
         </SafeAreaProvider>
     )
 }
+
+const styles = StyleSheet.create({
+    wrapper: {
+        paddingTop: Platform.OS === "android" ? 20 : 0,
+        backgroundColor: "#000"
+    }
+})
