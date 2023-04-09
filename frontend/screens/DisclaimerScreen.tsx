@@ -8,7 +8,7 @@ export const DisclaimerScreen = () => {
     const navigation = useNavigation()
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.buttonContainer}>
                 <Headline text={"Haftungsausschluss"} />
                 <Text style={styles.text}>
@@ -26,7 +26,7 @@ export const DisclaimerScreen = () => {
                     onPress={() => navigation.navigate("Home" as never)}
                 />
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -39,15 +39,18 @@ const styles = StyleSheet.create({
         position: "relative"
     },
     buttonContainer: {
-        marginTop: 190,
-        padding: 30,
-        alignSelf: "stretch"
+        paddingHorizontal: 30,
+        flex: 1,
+        alignSelf: "stretch",
+        display: "flex",
+        justifyContent: "space-between"
     },
     text: {
         marginVertical: 24,
         color: "#fff",
         textAlign: "justify",
         fontSize: 18,
-        fontFamily: "RobotoCondensedLight"
+        fontFamily: "RobotoCondensedLight",
+        overflow: "scroll"
     }
 })

@@ -30,12 +30,9 @@ export const AnimatedPlant = () => {
 
     return (
         <View style={styles.imageContainer} pointerEvents="none">
-            <Image
-                style={styles.image}
-                source={require("../assets/plant/main.png")}
-            />
+            <Image source={require("../assets/plant/main.png")} />
             <Animated.Image
-                style={[styles.image, {transform: [{rotate: spin}]}]}
+                style={[styles.pine, {transform: [{rotate: spin}]}]}
                 source={require("../assets/plant/pine.png")}
             />
         </View>
@@ -44,16 +41,12 @@ export const AnimatedPlant = () => {
 
 const styles = StyleSheet.create({
     imageContainer: {
-        width: "100%",
-        height: 250,
-        top: 130,
-        alignSelf: "stretch",
-        position: "absolute",
         transform: [{scale: 0.8}],
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: -40 // FIXME: besser wäre ohne
     },
-    image: {
+    pine: {
         position: "absolute"
     }
 })

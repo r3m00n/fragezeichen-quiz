@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import * as Font from "expo-font"
+import {SafeAreaProvider} from "react-native-safe-area-context"
 // Navigation
 import {NavigationContainer} from "@react-navigation/native"
 import {createNativeStackNavigator} from "@react-navigation/native-stack"
@@ -37,50 +38,52 @@ export default function App() {
     }
 
     return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Home"
-                    component={HomeScreen}
-                    options={{
-                        animation: "none",
-                        header: () => <Header showPlant={true} />
-                    }}
-                    // options={{headerShown: false}}
-                />
-                <Stack.Screen
-                    name="Selection"
-                    component={SelectionScreen}
-                    options={{
-                        animation: "fade",
-                        header: () => <Header showPlant={true} />
-                    }}
-                />
-                <Stack.Screen
-                    name="Question"
-                    component={QuestionScreen}
-                    options={{
-                        animation: "fade",
-                        header: () => <Header />
-                    }}
-                />
-                <Stack.Screen
-                    name="Contributors"
-                    component={ContributorsScreen}
-                    options={{
-                        animation: "fade",
-                        header: () => <Header showPlant={true} />
-                    }}
-                />
-                <Stack.Screen
-                    name="Disclaimer"
-                    component={DisclaimerScreen}
-                    options={{
-                        animation: "fade",
-                        header: () => <Header showPlant={true} />
-                    }}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <SafeAreaProvider>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name="Home"
+                        component={HomeScreen}
+                        options={{
+                            animation: "none",
+                            header: () => <Header showPlant={true} />
+                        }}
+                        // options={{headerShown: false}}
+                    />
+                    <Stack.Screen
+                        name="Selection"
+                        component={SelectionScreen}
+                        options={{
+                            animation: "fade",
+                            header: () => <Header showPlant={true} />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Question"
+                        component={QuestionScreen}
+                        options={{
+                            animation: "fade",
+                            header: () => <Header />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Contributors"
+                        component={ContributorsScreen}
+                        options={{
+                            animation: "fade",
+                            header: () => <Header showPlant={true} />
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Disclaimer"
+                        component={DisclaimerScreen}
+                        options={{
+                            animation: "fade",
+                            header: () => <Header showPlant={true} />
+                        }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </SafeAreaProvider>
     )
 }

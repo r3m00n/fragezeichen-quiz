@@ -10,9 +10,9 @@ export const ContributorsScreen = () => {
     const navigation = useNavigation()
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
+            <Headline text={"Mitwirkende"} />
             <View style={styles.buttonContainer}>
-                <Headline text={"Mitwirkende"} />
                 <View style={styles.creditsContainer}>
                     <Text style={[styles.text, styles.name]}>Rica Steffen</Text>
                     <Text style={styles.text}>Lead Developer</Text>
@@ -36,26 +36,26 @@ export const ContributorsScreen = () => {
                 />
             </View>
             <Text style={styles.version}>v{version}</Text>
-        </SafeAreaView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#000",
-        display: "flex",
-        alignItems: "center",
-        position: "relative"
+        backgroundColor: "#000"
     },
     buttonContainer: {
-        marginTop: 190,
-        padding: 30,
-        alignSelf: "stretch"
+        paddingHorizontal: 30,
+        alignSelf: "stretch",
+        flex: 1,
+        display: "flex",
+        justifyContent: "space-between"
     },
     creditsContainer: {
         marginTop: 12,
-        marginBottom: 24
+        marginBottom: 24,
+        overflow: "scroll"
     },
     text: {
         color: "#fff",

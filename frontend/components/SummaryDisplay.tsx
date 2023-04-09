@@ -9,9 +9,7 @@ export const SummaryDisplay = ({
     summary = "No Summary provided :/"
 }: CoverDisplayProps) => {
     return (
-        <ScrollView
-            style={styles.container}
-            scrollEnabled={summary.length > 530}>
+        <ScrollView style={styles.container} bounces={false}>
             <Text style={styles.summary}>{summary}</Text>
         </ScrollView>
     )

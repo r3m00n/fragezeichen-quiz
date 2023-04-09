@@ -10,7 +10,7 @@ interface SelectableProps {
 }
 
 export const Selectable = ({title, onSelect, type}: SelectableProps) => {
-    const [isSelected, setIsSelected] = useState(true)
+    const [isSelected, setIsSelected] = useState(false)
 
     const handlePress = () => {
         setIsSelected(!isSelected)

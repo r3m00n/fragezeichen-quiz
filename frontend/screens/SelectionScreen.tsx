@@ -19,10 +19,6 @@ export const SelectionScreen = () => {
     const [selectedTypes, setSelectedTypes] = useState<QuestionType[]>([])
     const [isHighlighted, setIsHighlighted] = useState(false)
 
-    useEffect(() => {
-        setSelectedTypes(GAMEMODES.map(g => g.type))
-    }, [])
-
     const handleSelect = (selected: boolean, type: QuestionType) => {
         if (selected) {
             setSelectedTypes([...selectedTypes, type])
@@ -48,7 +44,7 @@ export const SelectionScreen = () => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.selectionContainer}>
                 <Headline text={"Spielkategorien"} />
                 <Text style={[styles.text, styles.topText]}>
@@ -72,29 +68,29 @@ export const SelectionScreen = () => {
                         Zum starten mindestens eine Kategorie auswählen.
                     </Text>
                 )}
-                <Button
-                    text={"Quiz starten"}
-                    isPrimary={true}
-                    onPress={handleStart}
-                    style={styles.button}
-                    isInactive={!selectedTypes.length}
-                />
             </View>
-        </SafeAreaView>
+            <Button
+                text={"Quiz starten"}
+                isPrimary={true}
+                onPress={handleStart}
+                style={styles.button}
+                isInactive={!selectedTypes.length}
+            />
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+        paddingHorizontal: 30,
         flex: 1,
         backgroundColor: "#000",
         display: "flex",
         alignItems: "center",
+        justifyContent: "space-between",
         position: "relative"
     },
     selectionContainer: {
-        marginTop: 190,
-        padding: 30,
         alignSelf: "stretch",
         marginBottom: 24
     },
@@ -109,5 +105,5 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginVertical: 4
     },
-    button: {marginTop: 8}
+    button: {marginTop: 8, alignSelf: "stretch"}
 })

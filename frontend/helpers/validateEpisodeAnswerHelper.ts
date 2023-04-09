@@ -15,6 +15,11 @@ const percentageToPass = 0.8
 export const isValideAnswer = (input: string, answer: string): boolean => {
     // console.log("format(input)", format(input))
     // console.log("format(answer)", format(answer))
+    console.log(
+        "Similarity: ",
+        (similarity(format(input), format(answer)) * 100).toFixed(2),
+        "%"
+    ) //FIXME: delete
     return similarity(format(input), format(answer)) >= percentageToPass
 }
 

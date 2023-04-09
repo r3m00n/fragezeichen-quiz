@@ -1,27 +1,26 @@
-import {SafeAreaView, Text, StyleSheet} from "react-native"
+import {Text, StyleSheet, Platform, StatusBar, View} from "react-native"
 import React from "react"
 
 export const FragezeichenBanner = () => {
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <Text style={styles.text}>
                 Die drei ?<Text style={styles.red}>?</Text>
                 <Text style={styles.blue}>?</Text> Quiz
             </Text>
-        </SafeAreaView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginVertical: 32
+        backgroundColor: "#000"
     },
     text: {
         textAlign: "center",
-        fontSize: 50,
+        fontSize: 48,
         color: "#fff",
-        fontFamily: "HelveticaNeueLTProBdCn",
-        fontWeight: "700" // useless
+        fontFamily: "HelveticaNeueLTProBdCn"
     },
     red: {color: "#E91B24"},
     blue: {color: "#02ABEB"}

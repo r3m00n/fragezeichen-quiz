@@ -19,5 +19,6 @@ export const Header = ({showPlant = false}: HeaderProps) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#000"
+        // paddingTop: 25
     }
 })

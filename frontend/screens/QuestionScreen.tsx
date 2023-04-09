@@ -52,6 +52,8 @@ export const QuestionScreen = ({
     const handleSubmit = useCallback(() => {
         if (!inputText) return
 
+        console.log("Input:", inputText) // FIXME: delete
+
         // Keyboard.dismiss()
         setNumberQuestions(numberQuestions + 1)
         if (isValideAnswer(inputText, question.answer)) {
@@ -63,7 +65,7 @@ export const QuestionScreen = ({
         }
 
         setTimeout(() => {
-            setQuestion(quiz[numberQuestions + 1])
+            setQuestion(quiz[numberQuestions + 1]) // TODO: check if right
             setInputText("")
             setInputColor("#fff")
         }, 2000)
@@ -87,7 +89,7 @@ export const QuestionScreen = ({
     }, [question])
 
     return (
-        <SafeAreaView style={styles.wrapper}>
+        <View style={styles.wrapper}>
             <View style={styles.container}>
                 <Text style={[styles.text, styles.score]}>
                     Score: {score}/{numberQuestions}
@@ -100,7 +102,8 @@ export const QuestionScreen = ({
                     onChangeText={handleInputChange}
                     onSubmitEditing={handleSubmit}
                     blurOnSubmit={false}
-                    // onBlur={() => Keyboard.dismiss()}
+                    autoComplete="off"
+                    onBlur={() => Keyboard.dismiss()} // FIXME: shit ain't working
                 />
             </View>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -111,7 +114,7 @@ export const QuestionScreen = ({
                     onPress={handleSubmit}
                 />
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     )
 }
 
